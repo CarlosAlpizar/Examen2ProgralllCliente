@@ -184,6 +184,11 @@ public class Vista extends javax.swing.JFrame {
         jLabel4.setText("CATEGORÍA: ");
 
         ComboEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONE", "DISPONIBLE", "BAJO", "AGOTADO" }));
+        ComboEstado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ComboEstadoActionPerformed(evt);
+            }
+        });
 
         BtnAgregar.setText("AGREGAR");
         BtnAgregar.addActionListener(new java.awt.event.ActionListener() {
@@ -386,6 +391,7 @@ public class Vista extends javax.swing.JFrame {
         descripcion = TxPanel.getText() + "_";
         precio = TxPrecio.getText() + "_";
         impuesto = TxImpuesto.getText() + "_";
+
         categoria = ComboCateg.getSelectedItem().toString();
         if (categoria.equals("SALUD (1)")) {
             categoria = "1" + "_";
@@ -402,11 +408,22 @@ public class Vista extends javax.swing.JFrame {
         } else if (categoria.equals("TECNOLOGIA (7)")) {
             categoria = "7" + "_";
         } else {
-            JOptionPane.showMessageDialog(null, "Categoria no selecciona");
+            JOptionPane.showMessageDialog(null, "Categoria no seleccionada");
             return;
         }
 
-        estado = ComboEstado.getSelectedItem().toString() + "_";
+        estado = ComboEstado.getSelectedItem().toString();
+        if (estado.equals("DISPONIBLE")) {
+            estado = ComboEstado.getSelectedItem().toString() + "_";
+        } else if (estado.equals("BAJO")) {
+            estado = ComboEstado.getSelectedItem().toString() + "_";
+        } else if (estado.equals("AGOTADO")) {
+            estado = ComboEstado.getSelectedItem().toString() + "_";
+        } else {
+            JOptionPane.showMessageDialog(null, "Estado no seleccionado");
+            return;
+        }
+
         inventario = TxInventario.getText();
 
         String mensaje;
@@ -427,6 +444,10 @@ public class Vista extends javax.swing.JFrame {
     private void BtnActuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnActuaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_BtnActuaActionPerformed
+
+    private void ComboEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboEstadoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ComboEstadoActionPerformed
 
     /**
      * @param args the command line arguments
