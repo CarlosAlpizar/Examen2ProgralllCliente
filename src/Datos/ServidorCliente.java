@@ -22,6 +22,9 @@ public class ServidorCliente extends Observable implements Runnable {
         this.puerto = puerto;
     }
 
+    public ServidorCliente() {
+    }
+
     @Override
     public void run() {
 
@@ -38,7 +41,7 @@ public class ServidorCliente extends Observable implements Runnable {
                 input = new DataInputStream(sc.getInputStream());
 
                 String mensaje = input.readUTF();
-                System.out.println(mensaje);
+                enviarcategoria(mensaje);
 
                 String[] info = mensaje.split("_");
                 sc.close();
@@ -50,5 +53,9 @@ public class ServidorCliente extends Observable implements Runnable {
 
         }
 
+    }
+
+    public String enviarcategoria(String categoria) {
+        return categoria;
     }
 }
