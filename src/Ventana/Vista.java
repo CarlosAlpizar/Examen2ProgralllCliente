@@ -5,7 +5,7 @@
  */
 package Ventana;
 
-import Datos.Cliente;
+import Datos.RemitenteCliente;
 import javax.swing.JOptionPane;
 
 /**
@@ -129,7 +129,7 @@ public class Vista extends javax.swing.JFrame {
     /**
      * Creates new form Vista
      */
-    Cliente cliente = new Cliente();
+    RemitenteCliente cliente = new RemitenteCliente();
     private String nombre, descripcion, precio, impuesto, categoria, estado, inventario;
 
     public Vista() {
@@ -429,7 +429,7 @@ public class Vista extends javax.swing.JFrame {
         String mensaje;
         mensaje = insert + into + tabla + nombre + descripcion + precio + impuesto + categoria + estado + inventario;
 
-        cliente.enviarMensaje("localhost", 9000, mensaje);
+        RemitenteCliente.enviar("localhost", 9000, mensaje);
 
     }//GEN-LAST:event_BtnAgregarActionPerformed
 

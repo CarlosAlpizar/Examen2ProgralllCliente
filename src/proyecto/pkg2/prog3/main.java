@@ -5,22 +5,23 @@
  */
 package proyecto.pkg2.prog3;
 
-import Datos.Cliente;
+import Datos.RemitenteCliente;
+import Datos.ServidorCliente;
 import Ventana.Vista;
 
 /**
  *
  * @author User
  */
-public class Proyecto2Prog3 {
+public class main {
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
 
         Vista ventana = new Vista();
         ventana.setVisible(true);
+        ServidorCliente server = new ServidorCliente(9001);
+        Thread hilo = new Thread(server);
+        hilo.start();
 
     }
 
