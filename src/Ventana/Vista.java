@@ -551,7 +551,13 @@ public class Vista extends javax.swing.JFrame {
     }//GEN-LAST:event_TxAgregaCateActionPerformed
 
     private void BtnAgregarCatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAgregarCatActionPerformed
-        // TODO add your handling code here:
+         String insert = "insert_", into = "into_", tabla = "categoria_";
+         categoria = TxAgregaCate.getText() + "_";
+         
+         String mensaje;
+        mensaje = insert + into + tabla + categoria;
+        
+        RemitenteCliente.enviar("localhost", 9000, mensaje);
     }//GEN-LAST:event_BtnAgregarCatActionPerformed
 
     /**
