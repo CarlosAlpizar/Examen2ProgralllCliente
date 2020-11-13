@@ -6,14 +6,21 @@
 package Ventana;
 
 import Datos.RemitenteCliente;
+import Datos.ServidorCliente;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author User
  */
-public class Vista extends javax.swing.JFrame {
 
+
+public class Vista extends javax.swing.JFrame {
+    
+    
+    
+    
     /**
      * @return the ComboCateg
      */
@@ -131,9 +138,14 @@ public class Vista extends javax.swing.JFrame {
      */
     RemitenteCliente cliente = new RemitenteCliente();
     private String nombre, descripcion, precio, impuesto, categoria, estado, inventario;
+    DefaultTableModel Tcategoria = new DefaultTableModel();
+    ServidorCliente servidorcliente = new ServidorCliente();
+    
 
     public Vista() {
         initComponents();
+        
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -558,6 +570,9 @@ public class Vista extends javax.swing.JFrame {
         mensaje = insert + into + tabla + categoria;
         
         RemitenteCliente.enviar("localhost", 9000, mensaje);
+        String Mensaje = servidorcliente.enviarcategoria(categoria);
+        System.out.println(Mensaje);
+        System.out.println("este es el mensaje");
     }//GEN-LAST:event_BtnAgregarCatActionPerformed
 
     /**
