@@ -17,11 +17,12 @@ public class main {
 
     public static void main(String[] args) {
 
-        Vista ventana = new Vista();
-        ventana.setVisible(true);
+        
         ServidorCliente server = new ServidorCliente(9001);
         Thread hilo = new Thread(server);
         hilo.start();
+        Vista ventana = new Vista(server);
+        ventana.setVisible(true);
 
     }
 
