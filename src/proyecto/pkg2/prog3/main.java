@@ -8,6 +8,10 @@ package proyecto.pkg2.prog3;
 import Datos.RemitenteCliente;
 import Datos.ServidorCliente;
 import Ventana.Vista;
+import java.io.IOException;
+import java.net.BindException;
+import java.net.SocketException;
+import java.util.Random;
 
 /**
  *
@@ -15,14 +19,10 @@ import Ventana.Vista;
  */
 public class main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws BindException {
 
-        
-        ServidorCliente server = new ServidorCliente(9001);
-        Thread hilo = new Thread(server);
-        hilo.start();
-        Vista ventana = new Vista(server);
-        ventana.setVisible(true);
+        Vista ventana = new Vista();
+        ventana.iniciar();
 
     }
 
