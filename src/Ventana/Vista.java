@@ -133,7 +133,8 @@ public class Vista extends javax.swing.JFrame {
      */
     RemitenteCliente cliente = new RemitenteCliente();
     private String nombre, descripcion, precio, impuesto, categoria, estado, inventario;
-    DefaultTableModel Tcategoria = new DefaultTableModel();
+    DefaultTableModel Tcategoria;// = new DefaultTableModel();
+    DefaultTableModel Tarticulo;
     ServidorCliente servidorcliente = null;
 
     public Vista() {
@@ -551,22 +552,57 @@ public class Vista extends javax.swing.JFrame {
 
     private void BtnActuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnActuaActionPerformed
 
-        Tcategoria = new DefaultTableModel();
-        Tcategoria.addColumn("ID");
-        Tcategoria.addColumn("NOMBRE");
-
         String Mensaje = servidorcliente.enviarCategoria();
-        String[] mensajetabla = Mensaje.split(";");
-        for (String categoria : mensajetabla) {
-            String[] fila = categoria.split("_");
-            Object[] obj = new Object[2];
-            obj[0] = fila[0];
-            obj[1] = fila[1];
 
-            Tcategoria.addRow(obj);
+        String[] donde = Mensaje.split("#");
+
+        if (donde[0] == "c") {
+            Tcategoria = new DefaultTableModel();
+            Tcategoria.addColumn("ID");
+            Tcategoria.addColumn("NOMBRE");
+
+            String[] mensajetabla = Mensaje.split(";");
+            for (String categoria : mensajetabla) {
+                String[] fila = categoria.split("_");
+                Object[] obj = new Object[2];
+                obj[0] = fila[0];
+                obj[1] = fila[1];
+                ComboCateg.addItem(fila[1]);
+
+                Tcategoria.addRow(obj);
+            }
+            TablaCat.setModel(Tcategoria);
+            System.out.println(Mensaje);
+
+        } else {
+
+            Tarticulo = new DefaultTableModel();
+            Tarticulo.addColumn("ID");
+            Tarticulo.addColumn("NOMBRE");
+            Tarticulo.addColumn("DESCRIPCION");
+            Tarticulo.addColumn("PRECIO");
+            Tarticulo.addColumn("IMPUESTO");
+            Tarticulo.addColumn("CATEGORIA");
+            Tarticulo.addColumn("ESTADO");
+            Tarticulo.addColumn("INVENTARIO");
+
+            String[] mensajetabla = Mensaje.split(".");
+            for (String articulo : mensajetabla) {
+                String[] fila2 = articulo.split("_");
+                Object[] obj2 = new Object[8];
+
+                obj2[0] = fila2[0];
+                obj2[1] = fila2[1];
+                obj2[2] = fila2[2];
+                obj2[3] = fila2[3];
+                obj2[4] = fila2[4];
+                obj2[5] = fila2[5];
+                obj2[6] = fila2[6];
+                obj2[7] = fila2[7];
+
+            }
+
         }
-        TablaCat.setModel(Tcategoria);
-        System.out.println(Mensaje);
     }//GEN-LAST:event_BtnActuaActionPerformed
 
     private void ComboEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboEstadoActionPerformed

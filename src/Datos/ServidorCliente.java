@@ -54,14 +54,10 @@ public class ServidorCliente extends Observable implements Runnable {
 
                 sc = servidor.accept();
                 input = new DataInputStream(sc.getInputStream());
-                
+
                 String mensaje = input.readUTF();
                 msj = mensaje;
-                System.out.println("mensaje del servidorcliente: " + mensaje);
-                System.out.println("mensaje del servidorcliente2: " + msj);
-                System.out.println("mensaje del servidorcliente3: " + getMsj());
-                System.out.println("menaje metodo enviar categoria" + enviarCategoria());
-              //  String[] info = mensaje.split("_");
+
                 sc.close();
 
             }
@@ -72,8 +68,8 @@ public class ServidorCliente extends Observable implements Runnable {
         }
 
     }
-    
-    public String enviarCategoria(){
+
+    public String enviarCategoria() {
         return getMsj();
     }
 
