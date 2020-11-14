@@ -7,6 +7,8 @@ package Ventana;
 
 import Datos.RemitenteCliente;
 import Datos.ServidorCliente;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -134,6 +136,7 @@ public class Vista extends javax.swing.JFrame {
     RemitenteCliente cliente = new RemitenteCliente();
     private String nombre, descripcion, precio, impuesto, categoria, estado, inventario;
     DefaultTableModel Tcategoria = new DefaultTableModel();
+    DefaultTableModel Tarticulo = new DefaultTableModel();
     ServidorCliente servidorcliente = null;
 
     public Vista() {
@@ -244,7 +247,7 @@ public class Vista extends javax.swing.JFrame {
             }
         });
 
-        ComboCateg.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONE", "SALUD (1)", "EDUCACION (2)", "MUSICA (3)", "ANTIGÜEDADES (4)", "FERRETERIA (5)", "ROPA (6)", "TECNOLOGIA (7)", " " }));
+        ComboCateg.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1" }));
         ComboCateg.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ComboCategActionPerformed(evt);
@@ -500,25 +503,7 @@ public class Vista extends javax.swing.JFrame {
         precio = TxPrecio.getText() + "_";
         impuesto = TxImpuesto.getText() + "_";
 
-        categoria = ComboCateg.getSelectedItem().toString();
-        if (categoria.equals("SALUD (1)")) {
-            categoria = "1" + "_";
-        } else if (categoria.equals("EDUCACION (2)")) {
-            categoria = "2" + "_";
-        } else if (categoria.equals("MUSICA (3)")) {
-            categoria = "3" + "_";
-        } else if (categoria.equals("ANTIGÜEDADES (4)")) {
-            categoria = "4" + "_";
-        } else if (categoria.equals("FERRETERIA (5)")) {
-            categoria = "5" + "_";
-        } else if (categoria.equals("ROPA (6)")) {
-            categoria = "6" + "_";
-        } else if (categoria.equals("TECNOLOGIA (7)")) {
-            categoria = "7" + "_";
-        } else {
-            JOptionPane.showMessageDialog(null, "Categoria no seleccionada");
-            return;
-        }
+        categoria = ComboCateg.getSelectedItem().toString() + "_";
 
         estado = ComboEstado.getSelectedItem().toString();
         if (estado.equals("DISPONIBLE")) {
@@ -535,8 +520,9 @@ public class Vista extends javax.swing.JFrame {
         inventario = TxInventario.getText();
 
         String mensaje;
-        mensaje = insert + into + tabla + nombre + descripcion + precio + impuesto + categoria + estado + inventario;
 
+        mensaje = insert + into + tabla + nombre + descripcion + precio + impuesto + categoria + estado + inventario;
+        System.out.println(mensaje);
         RemitenteCliente.enviar("localhost", 9000, mensaje);
 
     }//GEN-LAST:event_BtnAgregarActionPerformed
@@ -550,23 +536,65 @@ public class Vista extends javax.swing.JFrame {
     }//GEN-LAST:event_TxImpuestoActionPerformed
 
     private void BtnActuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnActuaActionPerformed
-
-        Tcategoria = new DefaultTableModel();
-        Tcategoria.addColumn("ID");
-        Tcategoria.addColumn("NOMBRE");
-
+      /*  RemitenteCliente.enviar("localhost", 9000, "select");
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Vista.class.getName()).log(Level.SEVERE, null, ex);
+        }*/
+        ComboCateg.removeAllItems();
         String Mensaje = servidorcliente.enviarCategoria();
-        String[] mensajetabla = Mensaje.split(";");
-        for (String categoria : mensajetabla) {
-            String[] fila = categoria.split("_");
-            Object[] obj = new Object[2];
-            obj[0] = fila[0];
-            obj[1] = fila[1];
+        //System.out.println("Este es el mensaje: " + Mensaje);
+        String[] donde = Mensaje.split("%");
+        System.out.println("Este es donde[]: " + donde[0]);
+        if (donde[0].equals("C")) {
+            String mensajelimpio = donde[1];
+            String[] msjfinal = mensajelimpio.split(";");
+            Tcategoria = new DefaultTableModel();
+            Tcategoria.addColumn("ID");
+            Tcategoria.addColumn("NOMBRE");
+            for (String categoria : msjfinal) {
+                String[] info = categoria.split("_");
+                Object[] obj = new Object[2];
 
-            Tcategoria.addRow(obj);
+                obj[0] = info[0];
+                obj[1] = info[1];
+                Tcategoria.addRow(obj);
+
+                ComboCateg.addItem(info[1]);
+
+            }
+            TablaCat.setModel(Tcategoria);
+        } else {
+            Tarticulo = new DefaultTableModel();
+            Tarticulo.addColumn("ID");
+            Tarticulo.addColumn("NOMBRE");
+            Tarticulo.addColumn("DESCRIPCION");
+            Tarticulo.addColumn("PRECIO");
+            Tarticulo.addColumn("IMPUESTO");
+            Tarticulo.addColumn("CATEGORIA");
+            Tarticulo.addColumn("ESTADO");
+            Tarticulo.addColumn("INVENTARIO");
+            String[] msjfinal = Mensaje.split(";");
+            for (String articulo : msjfinal) {
+                String[] fila2 = articulo.split("_");
+                Object[] obj2 = new Object[8];
+
+                obj2[0] = fila2[0];
+                obj2[1] = fila2[1];
+                obj2[2] = fila2[2];
+                obj2[3] = fila2[3];
+                obj2[4] = fila2[4];
+                obj2[5] = fila2[5];
+                obj2[6] = fila2[6];
+                obj2[7] = fila2[7];
+                Tarticulo.addRow(obj2);
+
+            }
+            Table.setModel(Tarticulo);
         }
-        TablaCat.setModel(Tcategoria);
-        System.out.println(Mensaje);
+
+        //}
     }//GEN-LAST:event_BtnActuaActionPerformed
 
     private void ComboEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboEstadoActionPerformed

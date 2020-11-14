@@ -358,16 +358,8 @@
         <Component class="javax.swing.JComboBox" name="ComboCateg">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="9">
-                <StringItem index="0" value="SELECCIONE"/>
-                <StringItem index="1" value="SALUD (1)"/>
-                <StringItem index="2" value="EDUCACION (2)"/>
-                <StringItem index="3" value="MUSICA (3)"/>
-                <StringItem index="4" value="ANTIG&#xdc;EDADES (4)"/>
-                <StringItem index="5" value="FERRETERIA (5)"/>
-                <StringItem index="6" value="ROPA (6)"/>
-                <StringItem index="7" value="TECNOLOGIA (7)"/>
-                <StringItem index="8" value=" "/>
+              <StringArray count="1">
+                <StringItem index="0" value="1"/>
               </StringArray>
             </Property>
           </Properties>
