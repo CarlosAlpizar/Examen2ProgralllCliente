@@ -10,6 +10,79 @@ import javax.swing.table.DefaultTableModel;
 
 public class Vista extends javax.swing.JFrame {
 
+    public void ActualizarTablas() {
+        String mensaje = "refresh_" + puerto;
+        RemitenteCliente.enviar("localhost", 9000, mensaje);
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Vista.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        ComboCateg.removeAllItems();
+        String Mensaje = server.enviarCategoria();
+
+        String[] tablas = Mensaje.split("/");
+        String cate = tablas[1];
+        String arti = tablas[0];
+
+        String mensajelimpio = cate;
+        String[] msjfinal = mensajelimpio.split(";");
+        Tcategoria = new DefaultTableModel();
+        Tcategoria.addColumn("ID");
+        Tcategoria.addColumn("NOMBRE");
+        for (String categoria : msjfinal) {
+            String[] info = categoria.split("_");
+            Object[] obj = new Object[2];
+
+            obj[0] = info[0];
+            obj[1] = info[1];
+            Tcategoria.addRow(obj);
+
+            ComboCateg.addItem(info[1]);
+
+        }
+        TablaCat.setModel(Tcategoria);
+
+        Table.removeAll();
+        Tarticulo = new DefaultTableModel();
+        Tarticulo.addColumn("ID");
+        Tarticulo.addColumn("NOMBRE");
+        Tarticulo.addColumn("DESCRIPCION");
+        Tarticulo.addColumn("PRECIO");
+        Tarticulo.addColumn("IMPUESTO");
+        Tarticulo.addColumn("CATEGORIA");
+        Tarticulo.addColumn("ESTADO");
+        Tarticulo.addColumn("INVENTARIO");
+        
+        String[] perro = arti.split(";");
+        for (String articulo : perro) {
+            String[] fila2 = articulo.split("_");
+            Object[] obj2 = new Object[8];
+
+            obj2[0] = fila2[0];
+            obj2[1] = fila2[1];
+            obj2[2] = fila2[2];
+            obj2[3] = fila2[3];
+            obj2[4] = fila2[4];
+            obj2[5] = fila2[5];
+            obj2[6] = fila2[6];
+            obj2[7] = fila2[7];
+            Tarticulo.addRow(obj2);
+
+        }
+        Table.setModel(Tarticulo);
+
+    }
+
+    public javax.swing.JTextField getTxBuscar() {
+        return TxBuscar;
+    }
+
+    public void setTxBuscar(javax.swing.JTextField TxBuscar) {
+        this.TxBuscar = TxBuscar;
+    }
+
     public javax.swing.JComboBox<String> getComboCateg() {
         return ComboCateg;
     }
@@ -194,6 +267,11 @@ public class Vista extends javax.swing.JFrame {
         });
 
         BtnElim.setText("ELIMINAR ARTICULO");
+        BtnElim.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnElimActionPerformed(evt);
+            }
+        });
 
         jLabel5.setText("PRECIO:");
         jLabel5.setPreferredSize(new java.awt.Dimension(73, 14));
@@ -285,6 +363,11 @@ public class Vista extends javax.swing.JFrame {
         });
 
         BtnActualizar.setText("ACTUALIZAR");
+        BtnActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnActualizarActionPerformed(evt);
+            }
+        });
 
         jLabel13.setText("ID ARTICULO");
 
@@ -501,6 +584,8 @@ public class Vista extends javax.swing.JFrame {
         mensaje = puerto + "_" + insert + tabla + nombre + descripcion + precio + impuesto + categoria + estado + inventario;
         System.out.println(mensaje);
         RemitenteCliente.enviar("localhost", 9000, mensaje);
+        ActualizarTablas();
+        
 
     }//GEN-LAST:event_BtnAgregarActionPerformed
 
@@ -514,76 +599,7 @@ public class Vista extends javax.swing.JFrame {
 
     private void BtnActuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnActuaActionPerformed
 
-        String mensaje = "refresh_" + puerto;
-        RemitenteCliente.enviar("localhost", 9000, mensaje);
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(Vista.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        ComboCateg.removeAllItems();
-        String Mensaje = server.enviarCategoria();
-        System.out.println("Este es el mensaje: " + Mensaje);
-
-        if (Mensaje.equals(null)) {
-            System.out.println("entro a null");
-            return;
-        }
-
-        String[] donde = Mensaje.split("%");
-        System.out.println("Este es donde[]: " + donde[0]);
-
-        if (donde[0].equals("C")) {
-            String mensajelimpio = donde[1];
-            String[] msjfinal = mensajelimpio.split(";");
-            Tcategoria = new DefaultTableModel();
-            Tcategoria.addColumn("ID");
-            Tcategoria.addColumn("NOMBRE");
-            for (String categoria : msjfinal) {
-                String[] info = categoria.split("_");
-                Object[] obj = new Object[2];
-
-                obj[0] = info[0];
-                obj[1] = info[1];
-                Tcategoria.addRow(obj);
-
-                ComboCateg.addItem(info[1]);
-
-            }
-            TablaCat.setModel(Tcategoria);
-        } /* else if(donde[0].equals("refresh")){
-            System.out.println("entro refresh");
-
-        }*/ else {
-
-            Tarticulo = new DefaultTableModel();
-            Tarticulo.addColumn("ID");
-            Tarticulo.addColumn("NOMBRE");
-            Tarticulo.addColumn("DESCRIPCION");
-            Tarticulo.addColumn("PRECIO");
-            Tarticulo.addColumn("IMPUESTO");
-            Tarticulo.addColumn("CATEGORIA");
-            Tarticulo.addColumn("ESTADO");
-            Tarticulo.addColumn("INVENTARIO");
-            String[] msjfinal = Mensaje.split(";");
-            for (String articulo : msjfinal) {
-                String[] fila2 = articulo.split("_");
-                Object[] obj2 = new Object[8];
-
-                obj2[0] = fila2[0];
-                obj2[1] = fila2[1];
-                obj2[2] = fila2[2];
-                obj2[3] = fila2[3];
-                obj2[4] = fila2[4];
-                obj2[5] = fila2[5];
-                obj2[6] = fila2[6];
-                obj2[7] = fila2[7];
-                Tarticulo.addRow(obj2);
-
-            }
-            Table.setModel(Tarticulo);
-        }
+        ActualizarTablas();
 
     }//GEN-LAST:event_BtnActuaActionPerformed
 
@@ -605,6 +621,16 @@ public class Vista extends javax.swing.JFrame {
         RemitenteCliente.enviar("localhost", 9000, mensaje);
 
     }//GEN-LAST:event_BtnAgregarCatActionPerformed
+
+    private void BtnElimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnElimActionPerformed
+
+    }//GEN-LAST:event_BtnElimActionPerformed
+
+    private void BtnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnActualizarActionPerformed
+
+        int id = Integer.parseInt(TxBuscar.getText());
+
+    }//GEN-LAST:event_BtnActualizarActionPerformed
 
     /**
      * @param args the command line arguments
