@@ -24,6 +24,7 @@ public class Vista extends javax.swing.JFrame implements ActionListener {
         ComboCateg.removeAllItems();
         String Mensaje = server.enviarCategoria();
 
+
         String[] tablas = Mensaje.split("/");
         String cate = tablas[1];
         String arti = tablas[0];
@@ -172,6 +173,7 @@ public class Vista extends javax.swing.JFrame implements ActionListener {
             hilo.start();
             setVisible(true);
             setLocationRelativeTo(null);
+            
 
         } catch (Exception ex) {
 
@@ -183,7 +185,7 @@ public class Vista extends javax.swing.JFrame implements ActionListener {
     public Vista(ServidorCliente server) {
         initComponents();
         this.server = server;
-
+        ActualizarTablas();
     }
 
     @SuppressWarnings("unchecked")
@@ -551,6 +553,7 @@ public class Vista extends javax.swing.JFrame implements ActionListener {
             String aux = TxAgregaCate.getText();
             String msj = puerto + "_" + "insert_" + "categoria_" + aux;
             RemitenteCliente.enviar("localhost", 9000, msj);
+            
             reseteoCategoria();
             ActualizarTablas();
         }
@@ -593,6 +596,7 @@ public class Vista extends javax.swing.JFrame implements ActionListener {
 
     private void BtnEliCateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEliCateActionPerformed
         int fila = TablaCat.getSelectedRow();
+        
 
         if (fila == -1) {
             JOptionPane.showMessageDialog(null, "Seleccion un articulo en la tabla");
@@ -601,7 +605,7 @@ public class Vista extends javax.swing.JFrame implements ActionListener {
             int confirme = JOptionPane.showConfirmDialog(null, "Seguro de eliminar esta categoria ?", "Confirmacion", JOptionPane.YES_NO_OPTION);
             String value = (TablaCat.getModel().getValueAt(fila, 0).toString());
             if (confirme == JOptionPane.YES_OPTION) {
-                String mensaje = puerto + "_" + "delete_" + "articulo_" + value;
+                String mensaje = puerto + "_" + "delete_" +  "categoria_" + value;
                 RemitenteCliente.enviar("localhost", 9000, mensaje);
                 ActualizarTablas();
             }

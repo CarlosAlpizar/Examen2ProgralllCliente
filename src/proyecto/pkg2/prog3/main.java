@@ -9,6 +9,7 @@ public class main {
 
         Vista ventana = new Vista();
         ventana.iniciar();
+        
 
     }
 
