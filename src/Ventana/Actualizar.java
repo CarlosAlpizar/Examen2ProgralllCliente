@@ -6,20 +6,21 @@
 package Ventana;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Carlos Alpizar <carlosalpizarg@hotmail.com>
  */
-public class Actualizar extends javax.swing.JFrame  {
+public class Actualizar extends javax.swing.JFrame {
 
     /**
      * @return the Combo
      */
-    public void setListener(Vista vista){
+    public void setListener(Vista vista) {
         btnaceptar.addActionListener(vista);
     }
-    
+
     public javax.swing.JComboBox<String> getCombo() {
         return Combo;
     }
@@ -172,7 +173,12 @@ public class Actualizar extends javax.swing.JFrame  {
             }
         });
 
-        Combo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "DISPONIBLE", "BAJO", "AGOTADO" }));
+        Combo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONE", "DISPONIBLE", "BAJO", "AGOTADO" }));
+        Combo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ComboActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -236,7 +242,7 @@ public class Actualizar extends javax.swing.JFrame  {
                     .addComponent(jLabel8)
                     .addComponent(TxAcInventario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
-                .addComponent(btnaceptar)
+                .addComponent(btnaceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -259,8 +265,17 @@ public class Actualizar extends javax.swing.JFrame  {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnaceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaceptarActionPerformed
-        setVisible(false);
+        if (validar()) {
+            JOptionPane.showMessageDialog(null, "Formulario basio");
+        } else {
+            setVisible(false);
+        }
+
     }//GEN-LAST:event_btnaceptarActionPerformed
+
+    private void ComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ComboActionPerformed
 
     /**
      * @param args the command line arguments
@@ -295,6 +310,14 @@ public class Actualizar extends javax.swing.JFrame  {
                 new Actualizar().setVisible(true);
             }
         });
+    }
+
+    public boolean validar() {
+        if (TxAcNombre.getText().equals("") || TxAcDescrip.getText().equals("") || TxAcPrecio.getText().equals("") || TxAcImpuesto.getText().equals("")
+                || TxAcategotia.getText().equals("") || Combo.getSelectedItem().equals("SELECCIONE") || TxAcInventario.getText().equals("")) {
+            return true;
+        }
+        return false;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

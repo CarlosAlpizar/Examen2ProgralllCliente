@@ -115,7 +115,7 @@
                       <Component id="TxAcInventario" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="68" max="32767" attributes="0"/>
-                  <Component id="btnaceptar" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnaceptar" min="-2" pref="22" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -188,13 +188,17 @@
         <Component class="javax.swing.JComboBox" name="Combo">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="3">
-                <StringItem index="0" value="DISPONIBLE"/>
-                <StringItem index="1" value="BAJO"/>
-                <StringItem index="2" value="AGOTADO"/>
+              <StringArray count="4">
+                <StringItem index="0" value="SELECCIONE"/>
+                <StringItem index="1" value="DISPONIBLE"/>
+                <StringItem index="2" value="BAJO"/>
+                <StringItem index="3" value="AGOTADO"/>
               </StringArray>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ComboActionPerformed"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
