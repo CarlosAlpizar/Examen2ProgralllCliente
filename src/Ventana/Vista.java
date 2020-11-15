@@ -54,7 +54,7 @@ public class Vista extends javax.swing.JFrame {
         Tarticulo.addColumn("CATEGORIA");
         Tarticulo.addColumn("ESTADO");
         Tarticulo.addColumn("INVENTARIO");
-        
+
         String[] perro = arti.split(";");
         for (String articulo : perro) {
             String[] fila2 = articulo.split("_");
@@ -154,10 +154,12 @@ public class Vista extends javax.swing.JFrame {
 
     static int puerto = (int) (Math.random() * (9050 - 9001)) + 9001;
     ServidorCliente server = new ServidorCliente(puerto);
+    Actualizar ventanaAc = new Actualizar();
 
     public Vista() {
         initComponents();
         this.server = server;
+
     }
 
     public void iniciar() {
@@ -167,6 +169,7 @@ public class Vista extends javax.swing.JFrame {
             Thread hilo = new Thread(server);
             hilo.start();
             setVisible(true);
+            setLocationRelativeTo(null);
 
         } catch (Exception ex) {
 
@@ -256,8 +259,18 @@ public class Vista extends javax.swing.JFrame {
         });
 
         BtnEliCate.setText("ELIMINAR CATEGORIA");
+        BtnEliCate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnEliCateActionPerformed(evt);
+            }
+        });
 
         BtnConsulta.setText("CONSULTAR ");
+        BtnConsulta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnConsultaActionPerformed(evt);
+            }
+        });
 
         BtnActua.setText("REFRESCAR");
         BtnActua.addActionListener(new java.awt.event.ActionListener() {
@@ -286,7 +299,6 @@ public class Vista extends javax.swing.JFrame {
             }
         });
 
-        ComboCateg.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1" }));
         ComboCateg.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ComboCategActionPerformed(evt);
@@ -449,7 +461,7 @@ public class Vista extends javax.swing.JFrame {
                                         .addComponent(BtnConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(50, 50, 50)
                                         .addComponent(BtnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addContainerGap(29, Short.MAX_VALUE))))))
+                                .addContainerGap(41, Short.MAX_VALUE))))))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
@@ -534,17 +546,13 @@ public class Vista extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 12, Short.MAX_VALUE))
         );
 
         pack();
@@ -585,7 +593,6 @@ public class Vista extends javax.swing.JFrame {
         System.out.println(mensaje);
         RemitenteCliente.enviar("localhost", 9000, mensaje);
         ActualizarTablas();
-        
 
     }//GEN-LAST:event_BtnAgregarActionPerformed
 
@@ -612,13 +619,6 @@ public class Vista extends javax.swing.JFrame {
     }//GEN-LAST:event_TxAgregaCateActionPerformed
 
     private void BtnAgregarCatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAgregarCatActionPerformed
-        String insert = "insert_", tabla = "categoria_";
-        categoria = TxAgregaCate.getText() + "_";
-
-        String mensaje;
-        mensaje = puerto + "_" + insert + tabla + categoria;
-
-        RemitenteCliente.enviar("localhost", 9000, mensaje);
 
     }//GEN-LAST:event_BtnAgregarCatActionPerformed
 
@@ -628,13 +628,29 @@ public class Vista extends javax.swing.JFrame {
 
     private void BtnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnActualizarActionPerformed
 
-        int id = Integer.parseInt(TxBuscar.getText());
+        ventanaAc.setVisible(true);
+        String id = TxBuscar.getText() + "_";
+        nombre = ventanaAc.getTxAcNombre().getText() + "_";
+        descripcion = ventanaAc.getTxAcDescrip().getText() + "_";
+        precio = ventanaAc.getTxAcPrecio().getText() + "_";
+        impuesto = ventanaAc.getTxAcImpuesto().getText() + "_";
+        categoria = ventanaAc.getTxAcategotia().getText() + "_";
+        estado = ventanaAc.getCombo().getSelectedItem() + "_";
+        inventario = ventanaAc.getTxAcInventario().getText() + "_";
+
+        String mensaje = puerto + "_" + "update_" + "articulo_" + id + nombre + descripcion + precio + impuesto + categoria + estado + inventario;
+        RemitenteCliente.enviar("localhost", 9000, mensaje);
 
     }//GEN-LAST:event_BtnActualizarActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    private void BtnConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnConsultaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BtnConsultaActionPerformed
+
+    private void BtnEliCateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEliCateActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BtnEliCateActionPerformed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
