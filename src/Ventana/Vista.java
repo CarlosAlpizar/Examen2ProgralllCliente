@@ -10,6 +10,14 @@ import javax.swing.table.DefaultTableModel;
 
 public class Vista extends javax.swing.JFrame {
 
+    public javax.swing.JTextField getTxBuscar() {
+        return TxBuscar;
+    }
+
+    public void setTxBuscar(javax.swing.JTextField TxBuscar) {
+        this.TxBuscar = TxBuscar;
+    }
+
     public javax.swing.JComboBox<String> getComboCateg() {
         return ComboCateg;
     }
@@ -194,6 +202,11 @@ public class Vista extends javax.swing.JFrame {
         });
 
         BtnElim.setText("ELIMINAR ARTICULO");
+        BtnElim.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnElimActionPerformed(evt);
+            }
+        });
 
         jLabel5.setText("PRECIO:");
         jLabel5.setPreferredSize(new java.awt.Dimension(73, 14));
@@ -285,6 +298,11 @@ public class Vista extends javax.swing.JFrame {
         });
 
         BtnActualizar.setText("ACTUALIZAR");
+        BtnActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnActualizarActionPerformed(evt);
+            }
+        });
 
         jLabel13.setText("ID ARTICULO");
 
@@ -535,6 +553,7 @@ public class Vista extends javax.swing.JFrame {
         System.out.println("Este es donde[]: " + donde[0]);
 
         if (donde[0].equals("C")) {
+            TablaCat.removeAll();
             String mensajelimpio = donde[1];
             String[] msjfinal = mensajelimpio.split(";");
             Tcategoria = new DefaultTableModel();
@@ -552,11 +571,8 @@ public class Vista extends javax.swing.JFrame {
 
             }
             TablaCat.setModel(Tcategoria);
-        } /* else if(donde[0].equals("refresh")){
-            System.out.println("entro refresh");
-
-        }*/ else {
-
+        } else {
+            Table.removeAll();
             Tarticulo = new DefaultTableModel();
             Tarticulo.addColumn("ID");
             Tarticulo.addColumn("NOMBRE");
@@ -605,6 +621,16 @@ public class Vista extends javax.swing.JFrame {
         RemitenteCliente.enviar("localhost", 9000, mensaje);
 
     }//GEN-LAST:event_BtnAgregarCatActionPerformed
+
+    private void BtnElimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnElimActionPerformed
+
+    }//GEN-LAST:event_BtnElimActionPerformed
+
+    private void BtnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnActualizarActionPerformed
+
+        int id = Integer.parseInt(TxBuscar.getText());
+
+    }//GEN-LAST:event_BtnActualizarActionPerformed
 
     /**
      * @param args the command line arguments
