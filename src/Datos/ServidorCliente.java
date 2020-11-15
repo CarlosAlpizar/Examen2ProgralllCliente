@@ -47,6 +47,7 @@ public class ServidorCliente extends Observable implements Runnable {
 
                 String mensaje = input.readUTF();
                 msj = mensaje;
+                System.out.println("mensaje de servidorcliente ");
                 System.out.println(msj);
                 sc.close();
 
