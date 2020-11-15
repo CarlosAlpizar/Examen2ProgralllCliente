@@ -3,12 +3,14 @@ package Ventana;
 import Cliente.RemitenteCliente;
 import Datos.ServidorCliente;
 import java.awt.AWTException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-public class Vista extends javax.swing.JFrame {
+public class Vista extends javax.swing.JFrame implements ActionListener {
 
     public void ActualizarTablas() {
         String mensaje = "refresh_" + puerto;
@@ -628,18 +630,14 @@ public class Vista extends javax.swing.JFrame {
 
     private void BtnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnActualizarActionPerformed
 
+        ventanaAc.setListener(this);
         ventanaAc.setVisible(true);
-        String id = TxBuscar.getText() + "_";
-        nombre = ventanaAc.getTxAcNombre().getText() + "_";
-        descripcion = ventanaAc.getTxAcDescrip().getText() + "_";
-        precio = ventanaAc.getTxAcPrecio().getText() + "_";
-        impuesto = ventanaAc.getTxAcImpuesto().getText() + "_";
-        categoria = ventanaAc.getTxAcategotia().getText() + "_";
-        estado = ventanaAc.getCombo().getSelectedItem() + "_";
-        inventario = ventanaAc.getTxAcInventario().getText() + "_";
+        
 
-        String mensaje = puerto + "_" + "update_" + "articulo_" + id + nombre + descripcion + precio + impuesto + categoria + estado + inventario;
-        RemitenteCliente.enviar("localhost", 9000, mensaje);
+        
+        //String mensaje = puerto + "_" + "update_" + "articulo_" + 1 + "_" + "nombre_" + "descripcion_" + "precio_" + "imp_" + "comida_" + "estado_" + "ien_";
+        
+        
 
     }//GEN-LAST:event_BtnActualizarActionPerformed
 
@@ -722,4 +720,25 @@ public class Vista extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void actionPerformed(ActionEvent ae) {
+        if(ae.getSource() == ventanaAc.getBtnaceptar()){
+            System.out.println("estoy escuchando");
+            String id = TxBuscar.getText();
+        nombre = ventanaAc.getTxAcNombre().getText() + "_";
+        descripcion = ventanaAc.getTxAcDescrip().getText() + "_";
+        precio = ventanaAc.getTxAcPrecio().getText() + "_";
+        impuesto = ventanaAc.getTxAcImpuesto().getText() + "_";
+        categoria = ventanaAc.getTxAcategotia().getText() + "_";
+        estado = ventanaAc.getCombo().getSelectedItem() + "_";
+        inventario = ventanaAc.getTxAcInventario().getText() + "_";
+        
+        String mensaje = puerto + "_" + "update_" + "articulo_" + Integer.parseInt(id) + "_" + nombre + descripcion + precio + impuesto + categoria + estado + inventario;
+        
+        RemitenteCliente.enviar("localhost", 9000, mensaje);
+        ActualizarTablas();
+        }
+
+    }
 }

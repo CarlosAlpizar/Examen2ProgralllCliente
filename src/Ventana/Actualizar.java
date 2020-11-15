@@ -5,17 +5,27 @@
  */
 package Ventana;
 
+import javax.swing.JButton;
+
 /**
  *
  * @author Carlos Alpizar <carlosalpizarg@hotmail.com>
  */
-public class Actualizar extends javax.swing.JFrame {
+public class Actualizar extends javax.swing.JFrame  {
 
     /**
      * @return the Combo
      */
+    public void setListener(Vista vista){
+        btnaceptar.addActionListener(vista);
+    }
+    
     public javax.swing.JComboBox<String> getCombo() {
         return Combo;
+    }
+
+    public JButton getBtnaceptar() {
+        return btnaceptar;
     }
 
     /**
@@ -133,7 +143,7 @@ public class Actualizar extends javax.swing.JFrame {
         TxAcImpuesto = new javax.swing.JTextField();
         TxAcategotia = new javax.swing.JTextField();
         TxAcInventario = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        btnaceptar = new javax.swing.JButton();
         Combo = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -155,10 +165,10 @@ public class Actualizar extends javax.swing.JFrame {
 
         jLabel8.setText("INVENTARIO");
 
-        jButton1.setText("ACEPTAR");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnaceptar.setText("ACEPTAR");
+        btnaceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnaceptarActionPerformed(evt);
             }
         });
 
@@ -190,7 +200,7 @@ public class Actualizar extends javax.swing.JFrame {
                             .addComponent(TxAcNombre)
                             .addComponent(TxAcDescrip)
                             .addComponent(Combo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnaceptar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(21, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -226,7 +236,7 @@ public class Actualizar extends javax.swing.JFrame {
                     .addComponent(jLabel8)
                     .addComponent(TxAcInventario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(btnaceptar)
                 .addContainerGap())
         );
 
@@ -248,9 +258,9 @@ public class Actualizar extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnaceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaceptarActionPerformed
         setVisible(false);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnaceptarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -295,7 +305,7 @@ public class Actualizar extends javax.swing.JFrame {
     private javax.swing.JTextField TxAcNombre;
     private javax.swing.JTextField TxAcPrecio;
     private javax.swing.JTextField TxAcategotia;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnaceptar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
