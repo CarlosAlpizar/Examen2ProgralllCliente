@@ -1,11 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Ventana;
 
-import Datos.RemitenteCliente;
+import Cliente.RemitenteCliente;
 import Datos.ServidorCliente;
 import java.awt.AWTException;
 import java.util.logging.Level;
@@ -13,120 +8,68 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author User
- */
 public class Vista extends javax.swing.JFrame {
 
-    /**
-     * @return the ComboCateg
-     */
     public javax.swing.JComboBox<String> getComboCateg() {
         return ComboCateg;
     }
 
-    /**
-     * @param ComboCateg the ComboCateg to set
-     */
     public void setComboCateg(javax.swing.JComboBox<String> ComboCateg) {
         this.ComboCateg = ComboCateg;
     }
 
-    /**
-     * @return the ComboEstado
-     */
     public javax.swing.JComboBox<String> getComboEstado() {
         return ComboEstado;
     }
 
-    /**
-     * @param ComboEstado the ComboEstado to set
-     */
     public void setComboEstado(javax.swing.JComboBox<String> ComboEstado) {
         this.ComboEstado = ComboEstado;
     }
 
-    /**
-     * @return the Table
-     */
     public javax.swing.JTable getTable() {
         return Table;
     }
 
-    /**
-     * @param Table the Table to set
-     */
     public void setTable(javax.swing.JTable Table) {
         this.Table = Table;
     }
 
-    /**
-     * @return the TxImpuesto
-     */
     public javax.swing.JTextField getTxImpuesto() {
         return TxImpuesto;
     }
 
-    /**
-     * @param TxImpuesto the TxImpuesto to set
-     */
     public void setTxImpuesto(javax.swing.JTextField TxImpuesto) {
         this.TxImpuesto = TxImpuesto;
     }
 
-    /**
-     * @return the TxInventario
-     */
     public javax.swing.JTextField getTxInventario() {
         return TxInventario;
     }
 
-    /**
-     * @param TxInventario the TxInventario to set
-     */
     public void setTxInventario(javax.swing.JTextField TxInventario) {
         this.TxInventario = TxInventario;
     }
 
-    /**
-     * @return the TxNombre
-     */
     public javax.swing.JTextField getTxNombre() {
         return TxNombre;
     }
 
-    /**
-     * @param TxNombre the TxNombre to set
-     */
     public void setTxNombre(javax.swing.JTextField TxNombre) {
         this.TxNombre = TxNombre;
     }
 
-    /**
-     * @return the TxPanel
-     */
     public javax.swing.JTextPane getTxPanel() {
         return TxPanel;
     }
 
-    /**
-     * @param TxPanel the TxPanel to set
-     */
     public void setTxPanel(javax.swing.JTextPane TxPanel) {
         this.TxPanel = TxPanel;
     }
 
-    /**
-     * @return the TxPrecio
-     */
     public javax.swing.JTextField getTxPrecio() {
         return TxPrecio;
     }
 
-    /**
-     * @param TxPrecio the TxPrecio to set
-     */
     public void setTxPrecio(javax.swing.JTextField TxPrecio) {
         this.TxPrecio = TxPrecio;
     }
@@ -571,83 +514,76 @@ public class Vista extends javax.swing.JFrame {
 
     private void BtnActuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnActuaActionPerformed
 
-         String mensaje = "refresh_" + puerto;
-         RemitenteCliente.enviar("localhost", 9000, mensaje);
-          try {
+        String mensaje = "refresh_" + puerto;
+        RemitenteCliente.enviar("localhost", 9000, mensaje);
+        try {
             Thread.sleep(1000);
         } catch (InterruptedException ex) {
             Logger.getLogger(Vista.class.getName()).log(Level.SEVERE, null, ex);
         }
-         
+
         ComboCateg.removeAllItems();
         String Mensaje = server.enviarCategoria();
         System.out.println("Este es el mensaje: " + Mensaje);
-       
-        if(Mensaje.equals(null)){
+
+        if (Mensaje.equals(null)) {
             System.out.println("entro a null");
             return;
         }
-            
-        
+
         String[] donde = Mensaje.split("%");
         System.out.println("Este es donde[]: " + donde[0]);
 
-        
-        
-        
-        
-            if (donde[0].equals("C")) {
-                String mensajelimpio = donde[1];
-                String[] msjfinal = mensajelimpio.split(";");
-                Tcategoria = new DefaultTableModel();
-                Tcategoria.addColumn("ID");
-                Tcategoria.addColumn("NOMBRE");
-                for (String categoria : msjfinal) {
-                    String[] info = categoria.split("_");
-                    Object[] obj = new Object[2];
+        if (donde[0].equals("C")) {
+            String mensajelimpio = donde[1];
+            String[] msjfinal = mensajelimpio.split(";");
+            Tcategoria = new DefaultTableModel();
+            Tcategoria.addColumn("ID");
+            Tcategoria.addColumn("NOMBRE");
+            for (String categoria : msjfinal) {
+                String[] info = categoria.split("_");
+                Object[] obj = new Object[2];
 
-                    obj[0] = info[0];
-                    obj[1] = info[1];
-                    Tcategoria.addRow(obj);
+                obj[0] = info[0];
+                obj[1] = info[1];
+                Tcategoria.addRow(obj);
 
-                    ComboCateg.addItem(info[1]);
+                ComboCateg.addItem(info[1]);
 
-                }
-                TablaCat.setModel(Tcategoria);
-            } /* else if(donde[0].equals("refresh")){
+            }
+            TablaCat.setModel(Tcategoria);
+        } /* else if(donde[0].equals("refresh")){
             System.out.println("entro refresh");
-            
+
         }*/ else {
 
-                Tarticulo = new DefaultTableModel();
-                Tarticulo.addColumn("ID");
-                Tarticulo.addColumn("NOMBRE");
-                Tarticulo.addColumn("DESCRIPCION");
-                Tarticulo.addColumn("PRECIO");
-                Tarticulo.addColumn("IMPUESTO");
-                Tarticulo.addColumn("CATEGORIA");
-                Tarticulo.addColumn("ESTADO");
-                Tarticulo.addColumn("INVENTARIO");
-                String[] msjfinal = Mensaje.split(";");
-                for (String articulo : msjfinal) {
-                    String[] fila2 = articulo.split("_");
-                    Object[] obj2 = new Object[8];
+            Tarticulo = new DefaultTableModel();
+            Tarticulo.addColumn("ID");
+            Tarticulo.addColumn("NOMBRE");
+            Tarticulo.addColumn("DESCRIPCION");
+            Tarticulo.addColumn("PRECIO");
+            Tarticulo.addColumn("IMPUESTO");
+            Tarticulo.addColumn("CATEGORIA");
+            Tarticulo.addColumn("ESTADO");
+            Tarticulo.addColumn("INVENTARIO");
+            String[] msjfinal = Mensaje.split(";");
+            for (String articulo : msjfinal) {
+                String[] fila2 = articulo.split("_");
+                Object[] obj2 = new Object[8];
 
-                    obj2[0] = fila2[0];
-                    obj2[1] = fila2[1];
-                    obj2[2] = fila2[2];
-                    obj2[3] = fila2[3];
-                    obj2[4] = fila2[4];
-                    obj2[5] = fila2[5];
-                    obj2[6] = fila2[6];
-                    obj2[7] = fila2[7];
-                    Tarticulo.addRow(obj2);
+                obj2[0] = fila2[0];
+                obj2[1] = fila2[1];
+                obj2[2] = fila2[2];
+                obj2[3] = fila2[3];
+                obj2[4] = fila2[4];
+                obj2[5] = fila2[5];
+                obj2[6] = fila2[6];
+                obj2[7] = fila2[7];
+                Tarticulo.addRow(obj2);
 
-                }
-                Table.setModel(Tarticulo);
             }
-        
-        
+            Table.setModel(Tarticulo);
+        }
 
     }//GEN-LAST:event_BtnActuaActionPerformed
 

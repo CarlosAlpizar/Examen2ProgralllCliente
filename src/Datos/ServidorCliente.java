@@ -1,11 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Datos;
 
 import java.io.DataInputStream;
+import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Observable;
@@ -16,16 +12,10 @@ import java.util.Observable;
  */
 public class ServidorCliente extends Observable implements Runnable {
 
-    /**
-     * @return the msj
-     */
     public String getMsj() {
         return msj;
     }
 
-    /**
-     * @param msj the msj to set
-     */
     public void setMsj(String msj) {
         this.msj = msj;
     }
@@ -61,7 +51,7 @@ public class ServidorCliente extends Observable implements Runnable {
                 sc.close();
 
             }
-        } catch (Exception ex) {
+        } catch (IOException ex) {
 
             ex.printStackTrace();
 
