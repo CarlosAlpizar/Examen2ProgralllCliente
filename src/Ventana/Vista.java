@@ -552,10 +552,18 @@ public class Vista extends javax.swing.JFrame implements ActionListener {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BtnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnActualizarActionPerformed
-
-        if (validaEspacioId()) {
-            JOptionPane.showMessageDialog(null, "Ingrese el Id del articulo");
+        String sies = "no";
+        for (int i = 0; i < Table.getRowCount(); i++) {
+           if(TxBuscar.getText().equals(Table.getValueAt(i, 0).toString())){
+               sies = "si";
+           }
+        }
+        
+        System.out.println("sies: " + sies);
+        if (sies.equals("no")) {
+            JOptionPane.showMessageDialog(null, "Numero de articulo invalido");
         } else {
+            
             ventanaAc.setListener(this);
             ventanaAc.setVisible(true);
         }
@@ -688,7 +696,7 @@ public class Vista extends javax.swing.JFrame implements ActionListener {
     }//GEN-LAST:event_TableMouseClicked
 
     private void TxBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxBuscarActionPerformed
-        
+        TxBuscar.setEditable(false);
     }//GEN-LAST:event_TxBuscarActionPerformed
 
     public static void main(String args[]) {
