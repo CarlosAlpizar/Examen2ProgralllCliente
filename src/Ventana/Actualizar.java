@@ -266,7 +266,7 @@ public class Actualizar extends javax.swing.JFrame {
 
     private void btnaceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaceptarActionPerformed
         if (validar()) {
-            JOptionPane.showMessageDialog(null, "Formulario basio");
+            JOptionPane.showMessageDialog(null, "Formulario vacio");
         } else {
             setVisible(false);
         }

@@ -11,6 +11,8 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class Vista extends javax.swing.JFrame implements ActionListener {
+    
+    String valores = new String();
 
     public void ActualizarTablas() {
         String mensaje = "refresh_" + puerto;
@@ -186,7 +188,10 @@ public class Vista extends javax.swing.JFrame implements ActionListener {
         initComponents();
         this.server = server;
         ActualizarTablas();
+       
     }
+    
+    
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -315,6 +320,11 @@ public class Vista extends javax.swing.JFrame implements ActionListener {
                 "Id", "Nombre", "Descripcion", "Precio", "Impuesto", "Categoria", "Estado", "Inventario"
             }
         ));
+        Table.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(Table);
 
         jTabbedPane1.addTab("Articulos", jScrollPane1);
@@ -365,6 +375,12 @@ public class Vista extends javax.swing.JFrame implements ActionListener {
         BtnAgregarCat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtnAgregarCatActionPerformed(evt);
+            }
+        });
+
+        TxBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TxBuscarActionPerformed(evt);
             }
         });
 
@@ -664,6 +680,17 @@ public class Vista extends javax.swing.JFrame implements ActionListener {
         // TODO add your handling code here:
     }//GEN-LAST:event_TxNombreActionPerformed
 
+    private void TableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TableMouseClicked
+        DefaultTableModel model =  (DefaultTableModel)Table.getModel();
+        int seleccionado  = Table.getSelectedRow();
+        
+        TxBuscar.setText(model.getValueAt(seleccionado, 0).toString());
+    }//GEN-LAST:event_TableMouseClicked
+
+    private void TxBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxBuscarActionPerformed
+        
+    }//GEN-LAST:event_TxBuscarActionPerformed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -692,6 +719,7 @@ public class Vista extends javax.swing.JFrame implements ActionListener {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Vista().setVisible(true);
+                
             }
         });
     }
@@ -734,6 +762,7 @@ public class Vista extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JTabbedPane jTabbedPane1;
     // End of variables declaration//GEN-END:variables
 
+    
     @Override
     public void actionPerformed(ActionEvent ae) {
         if (ae.getSource() == ventanaAc.getBtnaceptar()) {
